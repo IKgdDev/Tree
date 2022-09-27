@@ -8,13 +8,13 @@ public class PersonComparator implements Comparator<Person> {
     }
 
     @Override
-    public int compare(Person o1, Person o2) {
-        String[] surname1 = o1.getSurname().split("[\s-]+");
-        String[] surname2 = o2.getSurname().split("[\s-]+");
+    public int compare(Person p1, Person p2) {
+        int len1 = p1.getSurname().split("[\s-]+").length;
+        int len2 = p2.getSurname().split("[\s-]+").length;
         int last = 0;
-        if (surname1.length >= wordsCount && surname2.length >= wordsCount) {
-            last = Integer.compare(surname1.length, surname2.length);
+        if (Math.min(len1,wordsCount) != Math.min(len2, wordsCount)) {
+            last = Integer.compare(len1, len2);
         }
-        return last == 0 ? Integer.compare(o1.getAge(), o2.getAge()) : last;
+        return last == 0 ? Integer.compare(p1.getAge(), p2.getAge()) : last;
     }
 }
