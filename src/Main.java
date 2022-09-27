@@ -1,22 +1,29 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Person p1 = new Person("Владимир", "Бонч-Бруевич", 60);
-        Person p2 = new Person("Михаил", "Голенищев-Кутузов-Смоленский", 54);
-        Person p3 = new Person("Андрей", "Кончаловский", 85);
-        Person p4 = new Person("Антуан", "де Сент-Экзюпери", 60);
-        Person p5 = new Person("Никита", "Михалков", 76);
+
+        int wordsCount = 2;
+
+        Comparator<Person> comparator = (Person p1, Person p2) -> {
+            int len1 = p1.getSurname().split("[\s-]+").length;
+            int len2 = p2.getSurname().split("[\s-]+").length;
+            if (Math.min(len1, wordsCount) != Math.min(len2, wordsCount)){
+                return Integer.compare(len1,len2);
+            }
+            return Integer.compare(p1.getAge(), p2.getAge());
+        };
 
         List<Person> list = new ArrayList<>();
-        list.add(p1);
-        list.add(p2);
-        list.add(p3);
-        list.add(p4);
-        list.add(p5);
-        Collections.sort(list, new PersonComparator(2));
+        list.add(new Person("Владимир", "Бонч-Бруевич", 60));
+        list.add(new Person("Михаил", "Голенищев-Кутузов-Смоленский", 54));
+        list.add(new Person("Андрей", "Кончаловский", 85));
+        list.add(new Person("Антуан", "де Сент-Экзюпери", 60));
+        list.add(new Person("Никита", "Михалков", 76));
+        Collections.sort(list, comparator);
 
         for (Person person : list) {
             System.out.println(person);
